@@ -1,4 +1,4 @@
-﻿namespace Ambev.DeveloperEvaluation.Application.Models.User;
+﻿namespace Ambev.DeveloperEvaluation.Application.Models.Users;
 
 /// <summary>
 /// Model for representing geolocation (latitude and longitude).

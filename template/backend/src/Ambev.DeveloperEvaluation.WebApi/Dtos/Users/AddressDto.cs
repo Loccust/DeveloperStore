@@ -1,6 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
-
-namespace Ambev.DeveloperEvaluation.Application.Dtos.Users;
+﻿namespace Ambev.DeveloperEvaluation.WebApi.Dtos.Users;
 
 /// <summary>
 /// DTO for representing an address in the CreateUserCommand.

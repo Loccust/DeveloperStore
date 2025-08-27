@@ -1,7 +1,6 @@
-﻿using Ambev.DeveloperEvaluation.Application.Dtos.Users;
-using Ambev.DeveloperEvaluation.Domain.Enums;
+﻿using Ambev.DeveloperEvaluation.Domain.Enums;
 
-namespace Ambev.DeveloperEvaluation.Application.Users.CreateUser;
+namespace Ambev.DeveloperEvaluation.WebApi.Dtos.Users;
 /// <summary>
 /// Base user data transfer object (DTO).
 /// Shared across commands and results to ensure consistency.

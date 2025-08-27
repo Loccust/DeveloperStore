@@ -1,4 +1,4 @@
-using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
+using Ambev.DeveloperEvaluation.WebApi.Dtos.Users;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
 

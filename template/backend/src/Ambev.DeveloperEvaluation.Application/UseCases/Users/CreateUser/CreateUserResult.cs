@@ -1,4 +1,4 @@
-﻿using Ambev.DeveloperEvaluation.Application.Models.User;
+﻿using Ambev.DeveloperEvaluation.Application.Models.Users;
 
 namespace Ambev.DeveloperEvaluation.Application.UseCases.Users.CreateUser;
 

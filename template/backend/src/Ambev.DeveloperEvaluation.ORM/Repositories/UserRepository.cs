@@ -1,5 +1,7 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Entities;
+﻿using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Ambev.DeveloperEvaluation.WebApi.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ambev.DeveloperEvaluation.ORM.Repositories;
@@ -71,5 +73,34 @@ public class UserRepository : IUserRepository
         _context.Users.Remove(user);
         await _context.SaveChangesAsync(cancellationToken);
         return true;
+    }
+
+    /// <summary>
+    /// Retrieves paginated users from the database
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>A list of all users according current page</returns>
+    public async Task<IPaginatedList<User>> GetUsersAsync(int pageNumber, int pageSize, string orderBy)
+    {
+        var query = _context.Users.AsNoTracking();
+        return await PaginatedList<User>.CreateAsync(query, pageNumber, pageSize);
+    }
+
+    /// <summary>
+    /// Updates an existing user in the database
+    /// </summary>
+    /// <param name="user">The user entity with updated values</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The updated user if found, null otherwise</returns>
+    public async Task<User?> UpdateAsync(User user, CancellationToken cancellationToken = default)
+    {
+        var existingUser = await GetByIdAsync(user.Id, cancellationToken);
+        if (existingUser == null)
+            return null;
+
+        _context.Entry(existingUser).CurrentValues.SetValues(user);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return existingUser;
     }
 }

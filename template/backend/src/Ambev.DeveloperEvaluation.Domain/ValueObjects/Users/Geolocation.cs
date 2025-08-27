@@ -1,4 +1,4 @@
-﻿namespace Ambev.DeveloperEvaluation.Domain.ValueObjects.User;
+﻿namespace Ambev.DeveloperEvaluation.Domain.ValueObjects.Users;
 
 /// <summary>
 /// Value Object for representing a geographic location.

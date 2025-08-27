@@ -1,6 +1,6 @@
 ﻿using Ambev.DeveloperEvaluation.Domain.Enums;
 
-namespace Ambev.DeveloperEvaluation.Application.Models.User;
+namespace Ambev.DeveloperEvaluation.Application.Models.Users;
 /// <summary>
 /// Model user
 /// Shared across commands and results to ensure consistency.

@@ -30,20 +30,20 @@ public class GetUserHandler : IRequestHandler<GetUserCommand, GetUserResult>
     /// <summary>
     /// Handles the GetUserCommand request
     /// </summary>
-    /// <param name="request">The GetUser command</param>
+    /// <param name="command">The GetUser command</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The user details if found</returns>
-    public async Task<GetUserResult> Handle(GetUserCommand request, CancellationToken cancellationToken)
+    public async Task<GetUserResult> Handle(GetUserCommand command, CancellationToken cancellationToken)
     {
         var validator = new GetUserValidator();
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        var validationResult = await validator.ValidateAsync(command, cancellationToken);
 
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var user = await _userRepository.GetByIdAsync(request.Id, cancellationToken);
+        var user = await _userRepository.GetByIdAsync(command.Id, cancellationToken);
         if (user == null)
-            throw new KeyNotFoundException($"User with ID {request.Id} not found");
+            throw new KeyNotFoundException($"User with ID {command.Id} not found");
 
         return _mapper.Map<GetUserResult>(user);
     }

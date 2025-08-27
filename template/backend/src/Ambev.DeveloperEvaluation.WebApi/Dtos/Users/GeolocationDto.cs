@@ -1,4 +1,4 @@
-﻿namespace Ambev.DeveloperEvaluation.Application.Dtos.Users;
+﻿namespace Ambev.DeveloperEvaluation.WebApi.Dtos.Users;
 
 /// <summary>
 /// DTO for representing geolocation (latitude and longitude).

@@ -8,6 +8,11 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Users.DeleteUser;
 using Ambev.DeveloperEvaluation.Application.UseCases.Users.CreateUser;
 using Ambev.DeveloperEvaluation.Application.UseCases.Users.DeleteUser;
 using Ambev.DeveloperEvaluation.Application.UseCases.Users.GetUser;
+using Ambev.DeveloperEvaluation.WebApi.Features.Users.ListUsers;
+using Ambev.DeveloperEvaluation.Application.UseCases.Users.ListUsers;
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.WebApi.Dtos.Users;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users;
 
@@ -118,4 +123,43 @@ public class UsersController : BaseController
             Message = "User deleted successfully"
         });
     }
+
+    /// <summary>
+    /// Retrieve a list of all users
+    /// </summary>
+    /// <param name="page">(optional): Page number for pagination (default: 1)</param>
+    /// <param name="size">(optional): Number of items per page (default: 10)</param>
+    /// <param name="order">(optional): Ordering of results (e.g., "username asc, email desc")</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The user details if found</returns>
+    [HttpGet]
+    [ProducesResponseType(typeof(ApiResponseWithData<GetUserResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ListUsers(
+        [FromQuery] int page = 1,
+        [FromQuery] int size = 10,
+        [FromQuery] string order = "",
+        CancellationToken cancellationToken = default)
+    {
+        var request = new ListUsersRequest
+        {
+            PageNumber = page,
+            PageSize = size,
+            OrderBy = order
+        };
+
+        var validator = new ListUsersRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var command = _mapper.Map<ListUsersCommand>(request);
+        var result = await _mediator.Send(command, cancellationToken);
+
+        var response = _mapper.Map<PaginatedResponse<UserDto>>(result);
+        return OkPaginated(response);
+    }
+
 }

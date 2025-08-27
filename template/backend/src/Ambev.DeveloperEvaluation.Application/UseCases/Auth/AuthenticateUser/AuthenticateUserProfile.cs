@@ -1,7 +1,7 @@
 using AutoMapper;
 using Ambev.DeveloperEvaluation.Domain.Entities;
-using Ambev.DeveloperEvaluation.Application.Models.User;
-using Ambev.DeveloperEvaluation.Domain.ValueObjects.User;
+using Ambev.DeveloperEvaluation.Domain.ValueObjects.Users;
+using Ambev.DeveloperEvaluation.Application.Models.Users;
 
 namespace Ambev.DeveloperEvaluation.Application.UseCases.Auth.AuthenticateUser;
 

@@ -1,3 +1,4 @@
+using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 
 namespace Ambev.DeveloperEvaluation.Domain.Repositories;
@@ -38,4 +39,19 @@ public interface IUserRepository
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>True if the user was deleted, false if not found</returns>
     Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Retrieves paginated users from the database
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>A list of all users according current page</returns>
+    Task<IPaginatedList<User>> GetUsersAsync(int pageNumber, int pageSize, string orderBy);
+
+    /// <summary>
+    /// Updates an existing user in the database
+    /// </summary>
+    /// <param name="user">The user entity with updated values</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The updated user if found, null otherwise</returns>
+    Task<User?> UpdateAsync(User user, CancellationToken cancellationToken = default);
 }

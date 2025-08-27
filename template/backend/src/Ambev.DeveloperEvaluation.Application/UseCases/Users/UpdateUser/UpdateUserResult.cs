@@ -1,5 +1,15 @@
-﻿namespace Ambev.DeveloperEvaluation.Application.UseCases.Users.UpdateUser;
+﻿using Ambev.DeveloperEvaluation.Application.Models.Users;
 
-public class UpdateUserResult
+namespace Ambev.DeveloperEvaluation.Application.UseCases.Users.UpdateUser;
+
+/// <summary>
+/// Result returned after creating a user.
+/// Inherits all user properties from <see cref="UserModel"/>.
+/// </summary>
+public class UpdateUserResult : UserModel
 {
+    /// <summary>
+    /// Gets or sets the generated identifier for the created user.
+    /// </summary>
+    public Guid Id { get; set; }
 }

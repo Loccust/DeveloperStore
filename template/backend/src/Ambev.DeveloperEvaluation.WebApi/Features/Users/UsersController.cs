@@ -13,6 +13,8 @@ using Ambev.DeveloperEvaluation.Application.UseCases.Users.ListUsers;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.WebApi.Dtos.Users;
+using Ambev.DeveloperEvaluation.WebApi.Features.Users.UpdateUser;
+using Ambev.DeveloperEvaluation.Application.UseCases.Users.UpdateUser;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users;
 
@@ -62,6 +64,34 @@ public class UsersController : BaseController
             Success = true,
             Message = "User created successfully",
             Data = _mapper.Map<CreateUserResponse>(response)
+        });
+    }
+
+    /// <summary>
+    /// Updates a user
+    /// </summary>
+    /// <param name="request">The user to update request</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The updated user details</returns>
+    [HttpPost("update")]
+    [ProducesResponseType(typeof(ApiResponseWithData<UpdateUserResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request, CancellationToken cancellationToken)
+    {
+        var validator = new UpdateUserRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var command = _mapper.Map<UpdateUserCommand>(request);
+        var response = await _mediator.Send(command, cancellationToken);
+
+        return Ok(new ApiResponseWithData<UpdateUserResponse>
+        {
+            Success = true,
+            Message = "User updated successfully",
+            Data = _mapper.Map<UpdateUserResponse>(response)
         });
     }
 

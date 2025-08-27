@@ -1,5 +1,11 @@
-﻿namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.UpdateUser;
+﻿using Ambev.DeveloperEvaluation.WebApi.Dtos.Users;
 
-public class UpdateUserResponse
+namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.UpdateUser;
+
+public class UpdateUserResponse : UserDto
 {
+    /// <summary>
+    /// The unique identifier of the updated user
+    /// </summary>
+    public Guid Id { get; set; }
 }

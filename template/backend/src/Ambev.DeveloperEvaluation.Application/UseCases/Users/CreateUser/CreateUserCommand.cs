@@ -13,7 +13,7 @@ namespace Ambev.DeveloperEvaluation.Application.UseCases.Users.CreateUser;
 public class CreateUserCommand : UserModel, IRequest<CreateUserResult>
 {
     /// <summary>
-    /// Performs validation of the command using <see cref="CreateUserCommandValidator"/>.
+    /// Performs validation of the command using <see cref="CreateUserValidator"/>.
     /// </summary>
     /// <returns>
     /// A <see cref="ValidationResult"/> containing:
@@ -21,5 +21,5 @@ public class CreateUserCommand : UserModel, IRequest<CreateUserResult>
     /// - Errors: Collection of validation errors if any rules failed
     /// </returns>
     public async Task<ValidationResult> ValidateAsync() =>
-        await new CreateUserCommandValidator().ValidateAsync(this);
+        await new CreateUserValidator().ValidateAsync(this);
 }

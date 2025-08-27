@@ -41,13 +41,9 @@ public class UpdateUserValidator : AbstractValidator<UpdateUserCommand>
             .Matches(@"^\d{5}-?\d{3}$").WithMessage("Invalid zipcode format (use 00000-000)");
 
         RuleFor(x => x.Address.Geolocation.Lat)
-            .NotEmpty().WithMessage("Latitude  is required")
-            .MinimumLength(3).WithMessage("Latitude  must be at least 3 characters long")
-            .MaximumLength(3).WithMessage("Latitude  must not exceed 3 characters");
+            .InclusiveBetween(-90, 90).WithMessage("Latitude must be between -90 and 90.");
 
         RuleFor(x => x.Address.Geolocation.Long)
-            .NotEmpty().WithMessage("Longitude is required")
-            .MinimumLength(3).WithMessage("Longitude must be at least 3 characters long")
-            .MaximumLength(3).WithMessage("Longitude must not exceed 3 characters");
+            .InclusiveBetween(-180, 180).WithMessage("Longitude must be between -180 and 180.");
     }
 }

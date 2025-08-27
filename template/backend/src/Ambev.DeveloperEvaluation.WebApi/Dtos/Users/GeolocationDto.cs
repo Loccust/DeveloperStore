@@ -4,6 +4,6 @@
 /// DTO for representing geolocation (latitude and longitude).
 /// </summary>
 public record GeolocationDto(
-    string Lat,
-    string Long
+    int Lat,
+    int Long
 );

@@ -77,11 +77,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             {
                 geo.Property(g => g.Lat)
                     .HasColumnName("Latitude")
-                    .HasMaxLength(50);
+                    .HasPrecision(10, 8);
 
                 geo.Property(g => g.Long)
                     .HasColumnName("Longitude")
-                    .HasMaxLength(50);
+                    .HasPrecision(11, 8);
             });
         });
     }

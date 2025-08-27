@@ -15,10 +15,6 @@ public sealed class AuthenticateUserProfile : Profile
     /// </summary>
     public AuthenticateUserProfile()
     {
-        CreateMap<NameModel, Name>();
-        CreateMap<AddressModel, Address>();
-        CreateMap<GeolocationModel, Geolocation>();
-
         CreateMap<User, AuthenticateUserResult>()
             .ForMember(dest => dest.Token, opt => opt.Ignore())
             .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.ToString()));

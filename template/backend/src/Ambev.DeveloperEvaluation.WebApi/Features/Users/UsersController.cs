@@ -70,13 +70,14 @@ public class UsersController : BaseController
     /// <summary>
     /// Updates a user
     /// </summary>
+    /// <param name="id">The ID of the user to update</param>
     /// <param name="request">The user to update request</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>The updated user details</returns>
-    [HttpPost("update")]
+    [HttpPut("{id}")]
     [ProducesResponseType(typeof(ApiResponseWithData<UpdateUserResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserRequest request, CancellationToken cancellationToken)
     {
         var validator = new UpdateUserRequestValidator();
         var validationResult = await validator.ValidateAsync(request, cancellationToken);
@@ -85,6 +86,7 @@ public class UsersController : BaseController
             return BadRequest(validationResult.Errors);
 
         var command = _mapper.Map<UpdateUserCommand>(request);
+        command.Id = id;
         var response = await _mediator.Send(command, cancellationToken);
 
         return Ok(new ApiResponseWithData<UpdateUserResponse>
